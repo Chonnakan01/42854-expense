@@ -1,0 +1,28 @@
+generator client {
+provider = "prisma-client-js"
+}
+
+
+datasource db {
+provider = "mysql"
+url = env("DATABASE_URL")
+}
+
+
+enum TransactionType {
+INCOME
+EXPENSE
+}
+
+
+model Transaction {
+id Int @id @default(autoincrement())
+type TransactionType
+title String @db.VarChar(255)
+amount Decimal @db.Decimal(12, 2)
+spendDate DateTime @db.Date
+createdAt DateTime @default(now()) @db.Timestamp(6)
+updatedAt DateTime @updatedAt @db.Timestamp(6)
+@@index([spendDate])
+@@index([type])
+}
