@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMPLE BY REGION</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container หลัก */
+    #temple.templeall {
+      background: url('https://inwfile.com/s-di/fbop7c.jpg') no-repeat center center;
+      background-size: cover;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    /* กำหนด Layout แบบ Grid */
+    .grid {
+      display: grid;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* ปรับจำนวน column ได้ */
+    .col-2 { grid-template-columns: repeat(2, 1fr); }
+    .col-3 { grid-template-columns: repeat(3, 1fr); }
+    .col-4 { grid-template-columns: repeat(4, 1fr); }
+
+    /* กล่องวัด */
+    #watthai.wat {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    #watthai.wat:hover {
+      transform: scale(1.05);
+    }
+
+    /* จัดการรูปภาพ */
+    #imagewatthai.imagewatthai2 {
+      width: 100%;
+      height: 300px;
+      object-fit: cover; /* Crop แบบไม่บิดเบี้ยว */
+      display: block;
+    }
+
+    .caption {
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    /* ปุ่มปรับการทำงาน */
+    .controls {
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #c49b63;
+      color: #fff;
+    }
+
+    button:hover {
+      background: #a37845;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="temple" class="templeall">
+    <h2>TEMPLE BY REGION</h2>
+    <p>ค้นหาข้อมูลวัดสวยตามภูมิภาค</p>
+
+    <div class="controls">
+      <button onclick="setColumns(2)">2 Columns</button>
+      <button onclick="setColumns(3)">3 Columns</button>
+      <button onclick="setColumns(4)">4 Columns</button>
+      <button onclick="toggleAutoPlay()">Toggle Auto Play</button>
+    </div>
+
+    <div id="templeGrid" class="grid col-4">
+      <div id="watthai" class="wat">
+        <img id="imagewatthai" class="imagewatthai2" src="https://cms.dmpcdn.com/travel/2022/05/11/1e276a60-d0f4-11ec-996e-e91b47d42a50_webp_original.jpg" alt="ภาคเหนือ">
+        <div class="caption">ภาคเหนือ</div>
+      </div>
+      <div id="watthai" class="wat">
+        <img id="imagewatthai" class="imagewatthai2" src="https://cms.dmpcdn.com/travel/2023/07/25/376763a0-2ad4-11ee-847a-4d34eb05d551_webp_original.webp" alt="ภาคกลาง">
+        <div class="caption">ภาคกลาง</div>
+      </div>
+      <div id="watthai" class="wat">
+        <img id="imagewatthai" class="imagewatthai2" src="https://cms.dmpcdn.com/travel/2022/06/01/1f847c10-e18c-11ec-b279-1993f89f514e_webp_original.jpg" alt="ภาคตะวันออกเฉียงเหนือ">
+        <div class="caption">ภาคตะวันออกเฉียงเหนือ</div>
+      </div>
+      <div id="watthai" class="wat">
+        <img id="imagewatthai" class="imagewatthai2" src="https://cms.dmpcdn.com/travel/2022/08/24/23451470-23a1-11ed-8e52-573188d6259f_webp_original.jpg" alt="ภาคตะวันตก">
+        <div class="caption">ภาคตะวันตก</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let grid = document.getElementById("templeGrid");
+    let autoPlay = false;
+    let interval;
+
+    function setColumns(num) {
+      grid.className = "grid col-" + num;
+    }
+
+    function toggleAutoPlay() {
+      autoPlay = !autoPlay;
+      if (autoPlay) {
+        interval = setInterval(() => {
+          let currentCols = grid.className.match(/col-(\d)/)[1];
+          let nextCols = parseInt(currentCols) % 4 + 2; // 2→3→4→2 วนไป
+          setColumns(nextCols);
+        }, 2000);
+      } else {
+        clearInterval(interval);
+      }
+    }
+  </script>
+
+</body>
+</html>
